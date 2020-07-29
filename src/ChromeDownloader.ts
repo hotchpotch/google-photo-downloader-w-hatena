@@ -10,7 +10,7 @@ const defaultOptions = {
   chromePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   profile: "Default",
   downloadPath: path.join(path.dirname(__dirname), "photos"),
-  timeout: 10000,
+  timeout: 30000,
 }
 
 type ChromeDownloadeOptions = typeof defaultOptions
