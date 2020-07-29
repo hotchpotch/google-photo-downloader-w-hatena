@@ -9,7 +9,7 @@ const defaultOptions = {
   chromePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   profile: 'Default',
   downloadPath: path.join(path.dirname(__dirname), 'photos'),
-  timeout: 30000,
+  timeout: 10000,
 };
 
 type ChromeDownloadeOptions = typeof defaultOptions
@@ -17,7 +17,9 @@ type ChromeDownloadeOptions = typeof defaultOptions
 function downloadFilename(url: string): string {
   const splitted = url.split('/')
   let last = splitted[splitted.length - 1].split('?')[0]
-  last = decodeURI(decodeURIComponent(last)).replace(/([\+]|%20)/g, ' ')
+  last = decodeURI(decodeURIComponent(last))
+    .replace(/([\+]|%20)/g, ' ')
+    .replace('~', '_') // XXX
   return last
 }
 
@@ -43,17 +45,23 @@ export class ChromeDownloader {
   }
 
   async downloadImages(urls: string[]) {
-    for (const url of urls) {
-      if (await this.downloadImage(url)) {
-        console.log('download successed(or exists): ', downloadFilename(url))
-      } else {
-        console.log('download error: ', url)
+    try {
+      for (const url of urls) {
+        if (await this.downloadImage(url)) {
+          console.log('download successed(or exists): ', downloadFilename(url))
+        } else {
+          console.log('download error: ', url)
+        }
+      }
+    } finally {
+      if (this.browser) {
+        await this.browser.close()
+        this.browser = null
       }
     }
-    await this.browser.close()
   }
 
-  async downloadImage(_url: string) {
+  private async downloadImage(_url: string) {
     const url = normalizeUrl(_url);
     try {
       if (this.existPhotoByUrl(url)) {

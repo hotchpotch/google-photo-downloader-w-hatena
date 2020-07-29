@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "download": "npx ts-node downloader.ts"
+    "download": "npx ts-node index.ts"
   },
   "devDependencies": {
     "@types/node": "^14.0.27",
@@ -12,5 +12,10 @@
     "puppeteer-core": "^5.2.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@types/mkdirp": "^1.0.1",
+    "mkdirp": "^1.0.4",
+    "tslib": "^2.0.0"
   }
 }

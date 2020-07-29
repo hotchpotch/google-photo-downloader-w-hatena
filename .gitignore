@@ -29,5 +29,5 @@ build/
 .DS_Store
 
 # Others
-./photos/*
-download.txt
+photos/
+download.*
