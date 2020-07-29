@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 import { sleep } from './sleep';
+import { downloadFilename } from './downloadFilename';
 
 const defaultOptions = {
   userDataDir: `${process.env.HOME}/Library/Application Support/Google/Chrome`,
@@ -14,16 +15,7 @@ const defaultOptions = {
 
 type ChromeDownloadeOptions = typeof defaultOptions
 
-function downloadFilename(url: string): string {
-  const splitted = url.split('/')
-  let last = splitted[splitted.length - 1].split('?')[0]
-  last = decodeURI(decodeURIComponent(last))
-    .replace(/([\+]|%20)/g, ' ')
-    .replace('~', '_') // XXX
-  return last
-}
-
-function normalizeUrl(url: string): string {
+function getDownloadUrl(url: string): string {
   return url.replace(/\/s\d+\//, '/d/')
 }
 
@@ -48,9 +40,9 @@ export class ChromeDownloader {
     try {
       for (const url of urls) {
         if (await this.downloadImage(url)) {
-          console.log('download successed(or exists): ', downloadFilename(url))
+          console.log(url, "\t", downloadFilename(url))
         } else {
-          console.log('download error: ', url)
+          console.error('download error: ', url, "\t", downloadFilename(url))
         }
       }
     } finally {
@@ -62,7 +54,7 @@ export class ChromeDownloader {
   }
 
   private async downloadImage(_url: string) {
-    const url = normalizeUrl(_url);
+    const url = getDownloadUrl(_url);
     try {
       if (this.existPhotoByUrl(url)) {
         return true
