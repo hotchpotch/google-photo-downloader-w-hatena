@@ -4,23 +4,28 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "download": "npx ts-node index.ts"
+    "download": "npx ts-node ./src/cli/google-photo-downloader.ts",
+    "fotolife-upload": "npx ts-node ./src/cli/hatena-fotolife-uploader.ts"
   },
   "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/mkdirp": "^1.0.1",
     "@types/node": "^12.0.0",
+    "@types/glob": "^7.1.3",
     "@types/puppeteer-core": "^2.0.0",
-    "prettier": "^2.0.5",
-    "puppeteer-core": "^5.2.1",
-    "ts-node": "^8.10.2",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
     "eslint": "^7.3.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5",
+    "puppeteer-core": "^5.2.1",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@types/mkdirp": "^1.0.1",
+    "commander": "^6.0.0",
+    "glob": "^7.1.6",
     "hatena-fotolife-api": "^1.0.0",
     "mkdirp": "^1.0.4",
     "tslib": "^2.0.0"

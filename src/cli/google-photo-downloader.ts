@@ -1,4 +1,4 @@
-import { ChromeDownloader } from "./src/ChromeDownloader"
+import { ChromeDownloader } from "../libs/ChromeDownloader"
 
 async function getStdinLines() {
   const buffers = []

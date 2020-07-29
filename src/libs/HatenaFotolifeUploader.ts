@@ -28,6 +28,6 @@ export class HatenaFotolifeUploader {
       file: filepath,
       folder: this.folder,
     })
-    return result
+    return result?.entry?.["hatena:imageurl"]?.["_"]
   }
 }
