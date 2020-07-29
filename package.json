@@ -2,5 +2,15 @@
   "name": "google-photo-downloader-chrome",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "download": "npx ts-node downloader.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.27",
+    "@types/puppeteer-core": "^2.0.0",
+    "puppeteer-core": "^5.2.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
 }
