@@ -43,12 +43,12 @@ function existResult(photo: string) {
   return existsSync(path)
 }
 
-for (const photo of photos) {
-  const resultPath = getResultPath(photo)
-  if (existResult(photo)) {
-    console.log("SKIP: " + resultPath + " exist.")
-  } else {
-    ;(async () => {
+;(async () => {
+  for (const photo of photos) {
+    const resultPath = getResultPath(photo)
+    if (existResult(photo)) {
+      console.log("SKIP: " + resultPath + " exist.")
+    } else {
       try {
         console.log("UPLOAD START:", photo)
         const resultUrl = await uploader.upload(photo)
@@ -57,9 +57,9 @@ for (const photo of photos) {
       } catch (e) {
         console.error("UPLOAD ERROR:", photo, e)
       }
-    })()
+    }
   }
-}
+})()
 
 // console.log(program.resultsDir)
 // console.log(program.photosDir)
