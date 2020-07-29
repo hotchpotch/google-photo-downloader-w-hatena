@@ -1,21 +1,21 @@
-import { ChromeDownloader } from "./src/chrome-downloader";
+import { ChromeDownloader } from "./src/ChromeDownloader"
 
 async function getStdinLines() {
-  const buffers = [];
+  const buffers = []
   for await (const chunk of process.stdin) {
-    buffers.push(chunk);
+    buffers.push(chunk)
   }
-  const buffer = Buffer.concat(buffers);
-  const source = buffer.toString();
-  return source.split(/\r?\n/);
+  const buffer = Buffer.concat(buffers)
+  const source = buffer.toString()
+  return source.split(/\r?\n/)
 }
 
-(async () => {
-  const lines = await getStdinLines();
+;(async () => {
+  const lines = await getStdinLines()
   const chromeDownloader = new ChromeDownloader()
   try {
     await chromeDownloader.downloadImages(lines)
   } catch (e) {
-    console.log('error', e)
+    console.log("error", e)
   }
-})();
+})()

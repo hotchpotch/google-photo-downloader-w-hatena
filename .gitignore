@@ -31,3 +31,4 @@ build/
 # Others
 photos/
 download.*
+tmp_*
