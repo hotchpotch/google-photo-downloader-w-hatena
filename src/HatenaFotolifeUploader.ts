@@ -1,6 +1,9 @@
 import fotolife, { Fotolife } from "hatena-fotolife-api"
 import { basename } from "path"
 
+// force change https
+;(Fotolife as any).BASE_URL = "https://f.hatena.ne.jp"
+
 export class HatenaFotolifeUploader {
   private client: Fotolife
   public folder: string
@@ -12,10 +15,10 @@ export class HatenaFotolifeUploader {
   }: {
     username: string
     apikey: string
-    folder: string
+    folder?: string
   }) {
     this.client = fotolife({ type: "wsse", username, apikey })
-    this.folder = folder
+    this.folder = folder || "Google Photos"
   }
 
   async upload(filepath: string) {
