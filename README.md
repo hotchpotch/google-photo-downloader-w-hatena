@@ -52,7 +52,7 @@ https://lh3.googleusercontent.com/-RlhNdg46VDc/XKH8yatb7rI/AAAAAAAA_ok/B4pgaJ0bU
 
 - chrome の path とか　 userDataDir とか profile とかは環境に合わせて変える
 - デフォルトでは ./photos に画像をダウンロードする
-- 完了すると、`download.result` に `URL,ダウンロードしたファイル名` というファイルが作られる
+- 完了すると、`download.results` に `URL,ダウンロードしたファイル名` という中身のファイルが作られる
 - `-t` のタイムアウトは標準だと 30 秒(30000)だけど、ネットワークが遅い環境だともっと長めにとったほうが良いかも。
 
 ## yarn fotolife-upload
@@ -71,7 +71,7 @@ $ yarn fotolife-upload -u hatena-id -a apikey
 - fotolife にアップロードされる画像サイズ、オリジナル画像の保存等の設定は https://f.hatena.ne.jp/my/config から。
   - 画像サイズのおすすめはお好みで(1200px ぐらいが個人的にはちょうどよい)、オリジナル画像の保存はオン。
   - デフォルトでは、fotolife の `Google Photos` フォルダーにアップロードされる
-- アップロードが成功した画像は、`./fototolife_result/${ファイル名}.data` にファイルが作られる
+- アップロードが成功した画像は、`./fototolife_results/${ファイル名}.data` にファイルが作られる
   - 中身はアップロードされた URL がテキストで格納されてる
   - 例: https://cdn-ak.f.st-hatena.com/images/fotolife/s/secondlife/20200730/20200730064312.jpg
   - これは 1200px 設定なら長辺 1200px の画像
@@ -81,12 +81,12 @@ $ yarn fotolife-upload -u hatena-id -a apikey
   - ので、画像容量が気になる人はアップドード前に photos 以下の画像を適当に縮小してください。
   - 例: imagemagick を使って長辺が 2048px に変換 `mogrify -resize '2048>' photos/*.jpg`
 
-## yarn -s generate-photo-mapping-csv ./fotolife_results/ download.result
+## yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results
 
-`./fotolife_results/` 以下のファイルと `download.result` ファイルを元に、 `置換元URL,置換後URL` な csv ファイルを標準出力に出力します。
+`./fotolife_results/` 以下のファイルと `download.results` ファイルを元に、 `置換元URL,置換後URL` な csv ファイルを標準出力に出力します。
 
 ```
-$ yarn -s generate-photo-mapping-csv ./fotolife_results/ download.result > replace-list.csv
+$ yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results > replace-list.csv
 ```
 
 ## yarn replace-photo-url
@@ -101,7 +101,7 @@ $ yarn replace-photo-url -i replace-list.csv ~/HatenaBlogSync/my.hatenablog.com/
 
 ```
 置換元URL,置換後URL
-https://lh3.googleusercontent.com/-nlYCT9o7SVQ/XKH-EWEwgII/AAAAAAAA_pM/WDK5sNv0sDUJe9PiYKHIjT2BFBOPpl6nwCLcBGAs/s1200/20190302-20190302-DSC05666.jpghttps://lh3.googleusercontent.com/-nlYCT9o7SVQ/XKH-EWEwgII/AAAAAAAA_pM/WDK5sNv0sDUJe9PiYKHIjT2BFBOPpl6nwCLcBGAs/s1200/20190302-20190302-DSC05666.jpg,https://cdn-ak.f.st-hatena.com/images/fotolife/s/secondlife/20200730/20200730064312.jpg
+https://lh3.googleusercontent.com/-nlYCT9o7SVQ/XKH-EWEwgII/AAAAAAAA_pM/WDK5sNv0sDUJe9PiYKHIjT2BFBOPpl6nwCLcBGAs/s1200/20190302-20190302-DSC05666.jpg,https://cdn-ak.f.st-hatena.com/images/fotolife/s/secondlife/20200730/20200730064312.jpg
 ```
 
 ## はてなブログユーザ - blog の push
