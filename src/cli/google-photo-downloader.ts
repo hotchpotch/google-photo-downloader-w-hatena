@@ -22,7 +22,7 @@ const DEFAULT_OPTIONS = {
       : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   profile: "Default",
   downloadPath: join(projectRoot, "photos"),
-  outputList: join(projectRoot, "download.results"),
+  outputList: join(projectRoot, "download.results.csv"),
   timeout: 30000,
 }
 

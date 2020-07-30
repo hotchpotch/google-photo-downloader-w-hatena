@@ -52,7 +52,7 @@ https://lh3.googleusercontent.com/-RlhNdg46VDc/XKH8yatb7rI/AAAAAAAA_ok/B4pgaJ0bU
 
 - chrome の path とか　 userDataDir とか profile とかは環境に合わせて変える
 - デフォルトでは ./photos に画像をダウンロードする
-- 完了すると、`download.results` に `URL,ダウンロードしたファイル名` という中身のファイルが作られる
+- 完了すると、`download.results.csv` に `URL,ダウンロードしたファイル名` という中身のファイルが作られる
 - `-t` のタイムアウトは標準だと 30 秒(30000)だけど、ネットワークが遅い環境だともっと長めにとったほうが良いかも。
 
 ## yarn fotolife-upload
@@ -77,16 +77,16 @@ $ yarn fotolife-upload -u hatena-id -a apikey
   - これは 1200px 設定なら長辺 1200px の画像
   - オリジナルの元画像は、拡張子の前に `_original` をつけるとアクセスできる
   - 例: https://cdn-ak.f.st-hatena.com/images/fotolife/s/secondlife/20200730/20200730064312_original.jpg
-- はてなフォトライフは無料だと 1 月あたり 300MB, 有料だと 3GB アップロードできる
+- はてなフォトライフは無料だと、ひとつきあたり 300MB, 有料だと 3GB アップロードできる
   - ので、画像容量が気になる人はアップドード前に photos 以下の画像を適当に縮小してください。
   - 例: imagemagick を使って長辺が 2048px に変換 `mogrify -resize '2048>' photos/*.jpg`
 
-## yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results
+## yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results.csv
 
-`./fotolife_results/` 以下のファイルと `download.results` ファイルを元に、 `置換元URL,置換後URL` な csv ファイルを標準出力に出力します。
+`./fotolife_results/` 以下のファイルと `download.results.csv` ファイルを元に、 `置換元URL,置換後URL` な csv ファイルを標準出力に出力します。
 
 ```
-$ yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results > replace-list.csv
+$ yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results.csv > replace-list.csv
 ```
 
 ## yarn replace-photo-url

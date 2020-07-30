@@ -6,6 +6,7 @@
   "scripts": {
     "download": "npx ts-node ./src/cli/google-photo-downloader.ts",
     "extract": "npx ts-node ./src/cli/extract-google-photo-url.ts",
+    "generate-photo-mapping-csv": "npx ts-node ./src/cli/generate-photo-mapping-csv.ts",
     "fotolife-upload": "npx ts-node ./src/cli/hatena-fotolife-uploader.ts"
   },
   "devDependencies": {
