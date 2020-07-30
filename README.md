@@ -57,7 +57,7 @@ https://lh3.googleusercontent.com/-RlhNdg46VDc/XKH8yatb7rI/AAAAAAAA_ok/B4pgaJ0bU
 
 ## yarn fotolife-upload
 
-フォトライフに画像をアップロードします。
+フォトライフに画像をアップロードします。アップロードする画像がフォトライフの容量上限を超えるとエラーになるので注意。
 
 ```
 $ yarn fotolife-upload -h
@@ -78,8 +78,10 @@ $ yarn fotolife-upload -u hatena-id -a apikey
   - オリジナルの元画像は、拡張子の前に `_original` をつけるとアクセスできる
   - 例: https://cdn-ak.f.st-hatena.com/images/fotolife/s/secondlife/20200730/20200730064312_original.jpg
 - はてなフォトライフは無料だと、ひとつきあたり 300MB, 有料だと 3GB アップロードできる
-  - ので、画像容量が気になる人はアップドード前に photos 以下の画像を適当に縮小してください。
+  - ので、画像容量が気になる人はアップ前に photos 以下の画像を適当に縮小してください。
   - 例: imagemagick を使って長辺が 2048px に変換 `mogrify -resize '2048>' photos/*.jpg`
+  - `du -h ./photos` でざっくりとしたアップロードサイズの総量はわかります。
+  - 私は画像総量が 5.5GB ほどあったので、二月にわけてアップロード…。
 
 ## yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results.csv
 
