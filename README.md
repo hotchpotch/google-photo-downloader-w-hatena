@@ -119,5 +119,5 @@ https://lh3.googleusercontent.com/-nlYCT9o7SVQ/XKH-EWEwgII/AAAAAAAA_pM/WDK5sNv0s
 ```
 $ blogsync push ~/HatenaBlogSync/my.hatenablog.com/**/*.md
 # windows で powershell なら例
-$ foreach($path in ls C:\data\HatenaBlogSync\my.hatenablog.jp\entry\*\*.md) { blogsync push $path; sleep 1 }
+$ foreach($path in ls C:\data\HatenaBlogSync\my.hatenablog.jp\entry\**\*.md) { blogsync push $path; sleep 1 }
 ```
