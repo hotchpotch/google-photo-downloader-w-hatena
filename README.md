@@ -93,9 +93,12 @@ $ yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results.csv > 
 
 ## yarn replace-photo-url
 
-`-i` で指定したファイルに基づいて、引数のファイル内部の URL を置換します。 ファイルの中身は、以下のような `,` 区切りの単純な CSV です。
+`-i` で指定したファイルに基づいて、引数のファイル内部の URL を置換して上書きします。 ファイルの中身は、以下のような `,` 区切りの単純な CSV です。
+
+`--dry-run` オプションがあるので、実行前にはどんなファイルが書き換わるのか確認すると良いでしょう。
 
 ```
+$ yarn replace-photo-url --dry-run -i replace-list.csv ~/HatenaBlogSync/my.hatenablog.com/**/*.md
 $ yarn replace-photo-url -i replace-list.csv ~/HatenaBlogSync/my.hatenablog.com/**/*.md
 ```
 
