@@ -22,6 +22,7 @@
 引数のファイル群から、Google Photos の URL を抽出して標準出力に表示します。たとえば、ダウンロードしたはてなブログのデータから抽出するとこんな感じ。
 
 ```
+$ yarn install
 $ yarn -s extract ~/HatenaBlogSync/my.hatenablog.com/**/*.md > download.list
 ```
 
@@ -30,8 +31,8 @@ $ yarn -s extract ~/HatenaBlogSync/my.hatenablog.com/**/*.md > download.list
 Google Chrome 経由で Google Photos のファイルをダウンロードします。
 
 ```
-$ yarn download -h
-$ yarn download -l download.list
+$ yarn download-google-photos -h
+$ yarn download-google-photos -l download.list
 ```
 
 - 前提として、ダウンロードしたい画像にアクセスできる、ログイン済みの Google Chrome が必要。
@@ -93,13 +94,13 @@ $ yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results.csv > 
 
 ## yarn replace-photo-url
 
-`-i` で指定したファイルに基づいて、引数のファイル内部の URL を置換して上書きします。 ファイルの中身は、以下のような `,` 区切りの単純な CSV です。
+`-l` で指定したファイルに基づいて、引数のファイル内部の URL を置換して上書きします。 ファイルの中身は、以下のような `,` 区切りの単純な CSV です。
 
 `--dry-run` オプションがあるので、実行前にはどんなファイルが書き換わるのか確認すると良いでしょう。
 
 ```
-$ yarn replace-photo-url --dry-run -i replace-list.csv ~/HatenaBlogSync/my.hatenablog.com/**/*.md
-$ yarn replace-photo-url -i replace-list.csv ~/HatenaBlogSync/my.hatenablog.com/**/*.md
+$ yarn replace-photo-url --dry-run -l replace-list.csv ~/HatenaBlogSync/my.hatenablog.com/**/*.md
+$ yarn replace-photo-url -l replace-list.csv ~/HatenaBlogSync/my.hatenablog.com/**/*.md
 ```
 
 ファイル例
