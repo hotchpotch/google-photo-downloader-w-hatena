@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "download": "npx ts-node ./src/cli/google-photo-downloader.ts",
+    "extract": "npx ts-node ./src/cli/extract-google-photo-url.ts",
     "fotolife-upload": "npx ts-node ./src/cli/hatena-fotolife-uploader.ts"
   },
   "devDependencies": {

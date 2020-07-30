@@ -1,11 +1,11 @@
 import { program } from "commander"
-import { dirname, join, resolve, basename } from "path"
+import { join, basename } from "path"
 import * as mkdirp from "mkdirp"
 import * as glob from "glob"
 import { HatenaFotolifeUploader } from "../libs/HatenaFotolifeUploader"
 import { existsSync, writeFileSync } from "fs"
+import { projectRoot } from "../libs/projectRoot"
 
-const projectRoot = dirname(dirname(resolve(__dirname)))
 const defaultFotolifeResult = join(projectRoot, "fotolife_results")
 const defaultPhotos = join(projectRoot, "photos")
 
@@ -52,7 +52,7 @@ function existResult(photo: string) {
       try {
         console.log("UPLOAD START:", photo)
         const resultUrl = await uploader.upload(photo)
-        writeFileSync(resultPath, resultUrl)
+        writeFileSync(resultPath, resultUrl + "\n")
         console.log("WROTE: ", resultPath)
       } catch (e) {
         console.error("UPLOAD ERROR:", photo, e)

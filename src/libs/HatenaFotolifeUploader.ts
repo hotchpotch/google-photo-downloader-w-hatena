@@ -1,7 +1,7 @@
 import fotolife, { Fotolife } from "hatena-fotolife-api"
 import { basename } from "path"
 
-// force change https
+// force change to https
 ;(Fotolife as any).BASE_URL = "https://f.hatena.ne.jp"
 
 export class HatenaFotolifeUploader {

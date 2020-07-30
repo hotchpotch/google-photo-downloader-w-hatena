@@ -5,30 +5,23 @@ import * as mkdirp from "mkdirp"
 import { sleep } from "./sleep"
 import { downloadFilename } from "./downloadFilename"
 
-const defaultOptions = {
-  userDataDir: `${process.env.HOME}/Library/Application Support/Google/Chrome`,
-  chromePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-  profile: "Default",
-  downloadPath: path.join(path.dirname(__dirname), "photos"),
-  timeout: 30000,
+type ChromeDownloadeOptions = {
+  userDataDir: string
+  chromePath: string
+  profile: string
+  downloadPath: string
+  timeout: number
 }
-
-type ChromeDownloadeOptions = typeof defaultOptions
 
 function getDownloadUrl(url: string): string {
   return url.replace(/\/s\d+\//, "/d/")
 }
 
 export class ChromeDownloader {
-  options: ChromeDownloadeOptions
   browser: Browser | null
 
-  constructor(_options: Partial<ChromeDownloadeOptions> = {}) {
-    this.options = {
-      ...defaultOptions,
-      ..._options,
-    }
-    mkdirp.sync(this.options.downloadPath)
+  constructor(public options: ChromeDownloadeOptions) {
+    mkdirp.sync(options.downloadPath)
   }
 
   existPhotoByUrl(url: string) {
@@ -37,12 +30,14 @@ export class ChromeDownloader {
   }
 
   async downloadImages(urls: string[]) {
+    const results: { [key: string]: string } = {}
     try {
       for (const url of urls) {
+        console.log("DOWNLOAD START: ", getDownloadUrl(url))
         if (await this.downloadImage(url)) {
-          console.log(url, "\t", downloadFilename(url))
+          results[url] = downloadFilename(url)
         } else {
-          console.error("download error: ", url, "\t", downloadFilename(url))
+          console.error("DOWNLOAD ERROR: ", url, "\t", downloadFilename(url))
         }
       }
     } finally {
@@ -51,6 +46,7 @@ export class ChromeDownloader {
         this.browser = null
       }
     }
+    return results
   }
 
   private async downloadImage(_url: string) {
