@@ -1,6 +1,6 @@
 import { program } from "commander"
 import { readFileSync, writeFileSync } from "fs"
-import { glob } from 'glob'
+import { glob } from "glob"
 
 program
   .requiredOption("-l, --replace-list <csv file>", "replace list csv file", "")
@@ -31,7 +31,7 @@ const dryRun = program.dryRun
 
 for (const arg of program.args) {
   let files = []
-  if (arg.indexOf('*') >= 0) {
+  if (arg.indexOf("*") >= 0) {
     files = glob.sync(arg)
   } else {
     files = [arg]

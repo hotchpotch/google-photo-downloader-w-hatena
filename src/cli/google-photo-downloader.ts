@@ -8,15 +8,14 @@ const DEFAULT_OPTIONS = {
   userDataDir:
     process.platform === "win32"
       ? join(
-        process.env.USERPROFILE,
-        "AppData/Local/Google/Chrome",
-        "User Data"
-      )
+          process.env.USERPROFILE,
+          "AppData/Local/Google/Chrome",
+          "User Data"
+        )
       : `${process.env.HOME}/Library/Application Support/Google/Chrome`,
   chromePath:
     process.platform === "win32"
-      ?
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+      ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
       : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   profile: "Default",
   downloadPath: join(projectRoot, "photos"),
@@ -69,17 +68,17 @@ const chromeDownloader = new ChromeDownloader({
 
 const googlePhotoUrls = readFileSync(program.urlList).toString().split(/\r?\n/)
 
-  ; (async () => {
-    try {
-      const result = await chromeDownloader.downloadImages(googlePhotoUrls)
-      writeFileSync(
-        program.outputDownloadedList,
-        Object.entries(result)
-          .map((a) => a.join(","))
-          .join("\n")
-      )
-      console.log("FINISH, WROTE: ", program.outputDownloadedList)
-    } catch (e) {
-      console.log("ERROR", e)
-    }
-  })()
+;(async () => {
+  try {
+    const result = await chromeDownloader.downloadImages(googlePhotoUrls)
+    writeFileSync(
+      program.outputDownloadedList,
+      Object.entries(result)
+        .map((a) => a.join(","))
+        .join("\n")
+    )
+    console.log("FINISH, WROTE: ", program.outputDownloadedList)
+  } catch (e) {
+    console.log("ERROR", e)
+  }
+})()

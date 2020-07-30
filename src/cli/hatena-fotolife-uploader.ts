@@ -5,6 +5,7 @@ import * as glob from "glob"
 import { HatenaFotolifeUploader } from "../libs/HatenaFotolifeUploader"
 import { existsSync, writeFileSync } from "fs"
 import { projectRoot } from "../libs/projectRoot"
+import { sleep } from "../libs/sleep"
 
 const defaultFotolifeResult = join(projectRoot, "fotolife_results")
 const defaultPhotos = join(projectRoot, "photos")
@@ -56,6 +57,7 @@ function existResult(photo: string) {
         console.log("WROTE: ", resultPath)
       } catch (e) {
         console.error("UPLOAD ERROR:", photo, e)
+        await sleep(5000)
       }
     }
   }
