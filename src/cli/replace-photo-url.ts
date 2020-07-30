@@ -1,5 +1,6 @@
 import { program } from "commander"
 import { readFileSync, writeFileSync } from "fs"
+import { glob } from 'glob'
 
 program
   .requiredOption("-l, --replace-list <csv file>", "replace list csv file", "")
@@ -28,27 +29,36 @@ const mappings = readFileSync(program.replaceList)
 
 const dryRun = program.dryRun
 
-for (const filepath of program.args) {
-  let source = readFileSync(filepath).toString()
-  let matched = false
-  for (const { url, urlRegexp, fotolifeUrl } of mappings) {
-    const replaced = source.replace(urlRegexp, fotolifeUrl)
-    if (replaced !== source) {
-      if (!matched) {
-        matched = true
+for (const arg of program.args) {
+  let files = []
+  if (arg.indexOf('*') >= 0) {
+    files = glob.sync(arg)
+  } else {
+    files = [arg]
+  }
+
+  for (const file of files) {
+    let source = readFileSync(file).toString()
+    let matched = false
+    for (const { url, urlRegexp, fotolifeUrl } of mappings) {
+      const replaced = source.replace(urlRegexp, fotolifeUrl)
+      if (replaced !== source) {
+        if (!matched) {
+          matched = true
+          if (dryRun) {
+            console.log(file)
+          }
+        }
+        source = replaced
         if (dryRun) {
-          console.log(filepath)
+          console.log(`REPLACE: ${url} => ${fotolifeUrl}`)
         }
       }
-      source = replaced
-      if (dryRun) {
-        console.log(`REPLACE: ${url} => ${fotolifeUrl}`)
-      }
-    }
 
-    if (!dryRun && matched) {
-      writeFileSync(filepath, source)
-      console.log("WROTE: ", filepath)
+      if (!dryRun && matched) {
+        writeFileSync(file, source)
+        console.log("WROTE: ", file)
+      }
     }
   }
 }

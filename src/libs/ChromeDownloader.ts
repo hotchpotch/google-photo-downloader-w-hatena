@@ -1,4 +1,4 @@
-import { launch, LaunchOptions, Browser } from "puppeteer-core"
+import { launch, LaunchOptions, Browser, defaultArgs } from "puppeteer-core"
 import * as path from "path"
 import * as fs from "fs"
 import * as mkdirp from "mkdirp"
@@ -80,7 +80,7 @@ export class ChromeDownloader {
 
       return true
     } catch (e) {
-      // console.log(e)
+      console.log(e)
       return false
     }
   }
@@ -119,11 +119,19 @@ export class ChromeDownloader {
         `--user-data-dir=${this.options.userDataDir}`,
         "about:blank",
       ]
+
       const launchOptions: LaunchOptions = {
         executablePath: this.options.chromePath,
-        args,
-        ignoreDefaultArgs: true,
         slowMo: 100,
+        ...process.platform === "win32" ? {
+          args: [
+            `--profile-directory=${this.options.profile}`,
+            `--user-data-dir=${this.options.userDataDir}`,
+          ],
+        } : {
+            args,
+            ignoreDefaultArgs: true,
+          }
       }
 
       this.browser = await launch(launchOptions)
