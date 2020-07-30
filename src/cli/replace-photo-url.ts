@@ -36,14 +36,19 @@ for (const filepath of program.args) {
     if (replaced !== source) {
       if (!matched) {
         matched = true
-        console.log(filepath)
+        if (dryRun) {
+          console.log(filepath)
+        }
       }
       source = replaced
-      console.log(`REPLACE: ${url} => ${fotolifeUrl}`)
+      if (dryRun) {
+        console.log(`REPLACE: ${url} => ${fotolifeUrl}`)
+      }
     }
 
     if (!dryRun && matched) {
-      // writeFileSync(filepath, source)
+      writeFileSync(filepath, source)
+      console.log("WROTE: ", filepath)
     }
   }
 }
