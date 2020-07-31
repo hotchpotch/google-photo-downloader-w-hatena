@@ -24,9 +24,20 @@ export class ChromeDownloader {
     mkdirp.sync(options.downloadPath)
   }
 
-  existPhotoByUrl(url: string) {
+  findLocalPhotoByUrl(url: string): string | null {
     const file = path.join(this.options.downloadPath, downloadFilename(url))
-    return fs.existsSync(file)
+    const res = fs.existsSync(file)
+    if (res) {
+      return file
+    }
+    // HEIC ファイルだと、.jpg に変換されていることがある？
+    if (file.match(/\.HEIC$/i)) {
+      const jpgFilename = file.replace(/\.HEIC$/i, ".jpg")
+      if (fs.existsSync(jpgFilename)) {
+        return jpgFilename
+      }
+    }
+    return null
   }
 
   async downloadImages(urls: string[]) {
@@ -35,7 +46,7 @@ export class ChromeDownloader {
       for (const url of urls) {
         console.log("DOWNLOAD START: ", getDownloadUrl(url))
         if (await this.downloadImage(url)) {
-          results[url] = downloadFilename(url)
+          results[url] = this.findLocalPhotoByUrl(url)
         } else {
           console.error("DOWNLOAD ERROR: ", url, "\t", downloadFilename(url))
         }
@@ -52,7 +63,7 @@ export class ChromeDownloader {
   private async downloadImage(_url: string) {
     const url = getDownloadUrl(_url)
     try {
-      if (this.existPhotoByUrl(url)) {
+      if (this.findLocalPhotoByUrl(url)) {
         return true
       }
       const browser = await this.factoryBrowser()
@@ -69,7 +80,7 @@ export class ChromeDownloader {
       }
 
       const now = Date.now()
-      while (!this.existPhotoByUrl(url)) {
+      while (!this.findLocalPhotoByUrl(url)) {
         if (now + this.options.timeout < Date.now()) {
           page.close()
           throw "timeout"
@@ -123,15 +134,17 @@ export class ChromeDownloader {
       const launchOptions: LaunchOptions = {
         executablePath: this.options.chromePath,
         slowMo: 100,
-        ...process.platform === "win32" ? {
-          args: [
-            `--profile-directory=${this.options.profile}`,
-            `--user-data-dir=${this.options.userDataDir}`,
-          ],
-        } : {
-            args,
-            ignoreDefaultArgs: true,
-          }
+        ...(process.platform === "win32"
+          ? {
+              args: [
+                `--profile-directory=${this.options.profile}`,
+                `--user-data-dir=${this.options.userDataDir}`,
+              ],
+            }
+          : {
+              args,
+              ignoreDefaultArgs: true,
+            }),
       }
 
       this.browser = await launch(launchOptions)

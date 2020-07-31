@@ -20,7 +20,7 @@ const DEFAULT_OPTIONS = {
   profile: "Default",
   downloadPath: join(projectRoot, "photos"),
   outputList: join(projectRoot, "download.results.csv"),
-  timeout: 30000,
+  timeout: "30000",
 }
 
 program
@@ -53,7 +53,6 @@ program
   .option(
     "-t, --timeout <msec>",
     "wait timeout (msec)",
-    parseInt,
     DEFAULT_OPTIONS.timeout
   )
   .parse(process.argv)
@@ -62,7 +61,7 @@ const chromeDownloader = new ChromeDownloader({
   userDataDir: program.userDataDir,
   chromePath: program.chromePath,
   profile: program.profile,
-  timeout: program.timeout,
+  timeout: parseInt(program.timeout, 10),
   downloadPath: program.downloadPath,
 })
 
