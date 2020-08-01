@@ -79,8 +79,8 @@ $ yarn fotolife-upload -u hatena-id -a apikey
   - オリジナルの元画像は、拡張子の前に `_original` をつけるとアクセスできる
   - 例: https://cdn-ak.f.st-hatena.com/images/fotolife/s/secondlife/20200730/20200730064312_original.jpg
 - はてなフォトライフは無料だと、ひとつきあたり 300MB, 有料だと 3GB アップロードできる
-  - ので、画像容量が気になる人はアップ前に photos 以下の画像を適当に縮小してください。
-  - 例: imagemagick を使って長辺が 2048px に変換 `mogrify -resize '2048>' photos/*.jpg`
+  - ので、画像容量が気になる人はアップ前に photos 以下の画像を適当に縮小、もしくはフォトライフ設定でオリジナルの画像保存をオフ。
+  - 例: imagemagick を使って長辺が 2048px に変換 `mogrify -resize '2048x2058' photos/*.jpg`
   - `du -h ./photos` でざっくりとしたアップロードサイズの総量はわかります。
   - 私は画像総量が 5.5GB ほどあったので、二月にわけてアップロード…。
 
@@ -118,6 +118,6 @@ https://lh3.googleusercontent.com/-nlYCT9o7SVQ/XKH-EWEwgII/AAAAAAAA_pM/WDK5sNv0s
 
 ```
 $ blogsync push ~/HatenaBlogSync/my.hatenablog.com/**/*.md
-# windows で powershell なら例
+# windows で powershell ならの例
 $ foreach($path in ls C:\data\HatenaBlogSync\my.hatenablog.jp\entry\**\*.md) { blogsync push $path; sleep 1 }
 ```
