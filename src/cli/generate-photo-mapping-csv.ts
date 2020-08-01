@@ -1,6 +1,6 @@
 import { program } from "commander"
 import { readFileSync, read, existsSync } from "fs"
-import { join } from "path"
+import { join, basename } from "path"
 
 program.parse(process.argv)
 
@@ -12,7 +12,7 @@ readFileSync(downloadResultFile)
   .split(/\r?\n/)
   .forEach((line) => {
     const [url, file] = line.split(",")
-    const resultPath = join(fotolifeResultsDir, file + ".data")
+    const resultPath = join(fotolifeResultsDir, basename(file) + ".data")
     if (existsSync(resultPath)) {
       const fotolifeUrl = readFileSync(resultPath).toString().trim()
       console.log([url, fotolifeUrl].join(","))
