@@ -4,7 +4,7 @@
 
 はてなブログユーザの場合、以下のような流れでデータを更新できます。
 
-- blogsync を用いたデータのダウンロード
+- blogsync を用いた、はてなブログデータのダウンロード
 - Google Photos の URL の抽出
 - Google Photos の画像のダウンロード
 - はてなフォトライフへのアップロード
@@ -12,6 +12,8 @@
 - blogsync を用いたデータのアップロード
 
 はてなブログユーザでなくとも、画像 URL リストから Google Photos の画像ファイルのダウンロードや、URL とダウンロードした画像のマッピングデータ(csv)の取得、はてなフォトライフへの画像アップロードが行なえます。
+
+MacOS と Windows (WSL2環境ではうまく Chrome 経由のダウンロードが行えなかったので、ふつうの Windows) 環境で動作を確認してます。
 
 ## はてなブログユーザ - blog の pull
 
@@ -66,7 +68,7 @@ $ yarn fotolife-upload -u hatena-id -a apikey
 ```
 
 - ./photos/ にダウンロードした画像をもとに、はてなフォトライフにアップロードする。
-- apikey は AtomPub の　 API キー
+- apikey は AtomPub のAPI キー
   - はてなブログの詳細設定から取得できる
   - http://blog.hatena.ne.jp/my/config/detail
 - fotolife にアップロードされる画像サイズ、オリジナル画像の保存等の設定は https://f.hatena.ne.jp/my/config から。
@@ -81,8 +83,8 @@ $ yarn fotolife-upload -u hatena-id -a apikey
 - はてなフォトライフは無料だと、ひとつきあたり 300MB, 有料だと 3GB アップロードできる
   - ので、画像容量が気になる人はアップ前に photos 以下の画像を適当に縮小、もしくはフォトライフ設定でオリジナルの画像保存をオフ。
   - 例: imagemagick を使って長辺が 2048px に変換 `mogrify -resize '2048x2058' photos/*.jpg`
-  - `du -h ./photos` でざっくりとしたアップロードサイズの総量はわかります。
-  - 私は画像総量が 5.5GB ほどあったので、二月にわけてアップロード…。
+  - `du -h ./photos` でざっくりとしたアップロードサイズの総量はわかります。フォトライプにアップすると、サムネイルの分も加算されるっぽいので、もうちょっと容量が必要になります。
+  - 私は画像総量が 5.5GB ほどあったので、ふたつきにわけてアップロード…。
 
 ## yarn -s generate-photo-mapping-csv ./fotolife_results/ download.results.csv
 
